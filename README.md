@@ -38,7 +38,25 @@ Morphological operations generally come up with one problem which is a clusterin
 2. `watershed` = Function used for segmentation of particle by treating the image as a surface where light pixels represent high elevations and dark pixels represent low elevations (therefore we required to create a gradient using `bwdist`)
 Directly using these functions leads to over-segmentation observed in figure below.
 
-<img src="Readme_Image/5.png" width="700">
+<img src="Readme_Image/5.jpg" width="500">
 
 `Figure: over-segmentation using the watershed function`
 
+## MODEFIED WATERSHED
+To remove this over-segmentation from the image we have to modify the image before applying watershed according to the working of the watershed function.
+
+The `raw` watershed transform is known for its tendency to `over segment` an image. The reason is that for each local minimum, no matter how small, becomes a catchment basin. (catchment basin is local or regional minimum in the image which is generally at the centre of a particle). Using bwdist we create a distance transformation which acts as a topographical surface. Working of the watershed could be understood as if the local minima are holes and entire topography is flooded and the water inside each catchment basins are also raising with a constant rate, the pixels where water from one catchment basin overflows to another basin algorithm consider them as a segmentation line. The reason behind over-segmentation is the formation of multiple tiny local minima where each pair of minima leads to the formation of a segmentation line.
+
+The Image Processing Toolbox function watershed can find the catchment basins and creates watershed lines for any grayscale image which will work as segmentation lines. 
+
+To overcome over-segmentation, we need to filter out tiny local minima using “imextendedmin” and then modify the distance transform so that no minima occur at the filtered-out locations. This is called `minima imposition` and is implemented via the function `imimposemin`.
+
+The following call to `imextendedmin` should ideally just produce small spots that are roughly in the middle of the cells to be segmented, all other tiny minima are not considered after this call. 
+
+<img src="Readme_Image/2.png" width="500">
+
+`Figure: before and after segmentation`
+
+# Complete pictorial pipeline of image processing and its analysis
+<img src="Readme_Image/3.png" width="500">
+<img src="Readme_Image/4.png" width="500">
