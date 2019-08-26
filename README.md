@@ -29,8 +29,16 @@ Noise due to the blurred image and during RGB to BW formation unstructured parti
  **2.** `bwmorph` = On the basis of majority (Sets a pixel to 1 if five or more pixels in its 3-by-3 neighbourhood are      1s; otherwise, it sets the pixel to 0) it will help to give structure to the particles.
 Various input parameters are tuned by observing the particles after implementing boundary around each particle and particle size distribution using `regionprop`.
 
+<img src="Readme_Image/6.png" width="700">
+
+`Figure: Before(A) and after(B) morfological operation`
 
 Morphological operations generally come up with one problem which is a clustering of two or more closely arranged particle. Therefore, now the model is considering those clusters as a single particle which will affect the particle size prediction. To overcome that issue, we implemented segmentation operations for dividing the particles.
-1.  bwdist = It computes the Euclidean distance transform of the binary image BW. For each pixel in BW, the distance transform assigns a 	number that is the distance between that pixel and the nearest nonzero pixel of BW. (it creates a gradient of intensity inside the particle, we consider a particle as white and background as black so we need to use this function as “-bwdist(~bw)” where ‘bw ‘is image matrix).
-2. watershed = Function used for segmentation of particle by treating the image as a surface where light pixels represent high elevations and dark pixels represent low elevations (therefore we required to create a gradient using bwdist)
-Directly using these functions leads to over-segmentation observed in figure (1.3) below.
+1.  `bwdist` = It computes the Euclidean distance transform of the binary image BW. For each pixel in BW, the distance transform assigns a 	number that is the distance between that pixel and the nearest nonzero pixel of BW. (it creates a gradient of intensity inside the particle, we consider a particle as white and background as black so we need to use this function as “-bwdist(~bw)” where ‘bw ‘is image matrix).
+2. `watershed` = Function used for segmentation of particle by treating the image as a surface where light pixels represent high elevations and dark pixels represent low elevations (therefore we required to create a gradient using `bwdist`)
+Directly using these functions leads to over-segmentation observed in figure below.
+
+<img src="Readme_Image/5.png" width="700">
+
+`Figure: over-segmentation using the watershed function`
+
