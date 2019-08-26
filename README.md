@@ -11,4 +11,5 @@ MATLAB is used for image analysis as it is more prompt for matrix analysis and t
 The process of analysis is divided into four steps which are **first**, RGB to BW image conversion for dimension reduction. **Second**, morphological operation to reduce irregularities and giving structure to the coal particle in the binary image. **Third**, obtaining basic information i.e. area for each particle observed in the image. **Forth**, classifying particles on the basis of area of 3mm particle.
 
 During Cross-Validation of the model with the sieve analysed data outcome of several samples we come up with an observation that the particle size prediction is not accurate when the percentage of fine particles is high which means when the percentage of particle size less than 3mm error increases. If we create a boundary around each particle (i.e. red in colour which may be difficult to observe), we observed that fine particles which are very close to each other or overlapping each other are considered as a single particle which acts as an anomaly in our prediction model.
-![]
+
+![](image-processing-for-particle-size/Readme_Image/1.png.jpg)
